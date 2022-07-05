@@ -71,9 +71,65 @@ lapply(c("ggraph","igraph","tidyverse", "data.tree"), library, character.only = 
 
 
 
-
 options(scipen=999)
 getPalette = colorRampPalette(brewer.pal(9, "Set1")) # expand color pallete
 source ( "accessory.R")
 
 ```
+
+
+```{r}
+
+# after preprocessing and merging will be stored here
+preprocessed_dir = "/projects/lab.mis/ASC_projects/scRNAseq_zhou_etal/pre_processed/"
+dir.create ( preprocessed_dir )
+filename = paste0(preprocessed_dir, "zhou_OS.rds" )
+
+normalizeded_dir = "/projects/lab.mis/ASC_projects/scRNAseq_zhou_etal/normalized/"
+dir.create ( normalizeded_dir )
+filename_norm = paste0(normalizeded_dir, "zhou_OS.rds" )
+
+
+
+
+# there are 5 samples 
+raw_dir = "/projects/lab.mis/ASC_projects/scRNAseq_zhou_etal/raw/GSE152048/suppl/"
+samples = list.files(raw_dir)
+samples = samples[ grepl ( "tar.gz", samples)]
+
+raw_df = data.frame()
+for ( s in samples ){
+  id = str_match(s, ".*_(.*)\\.matrix")[, 2]
+  raw_df = rbind ( raw_df , data.frame ( pid=id, file=s))
+}
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
