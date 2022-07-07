@@ -386,8 +386,39 @@ cell_type_plot = DimPlot(pbmc_harmony, reduction = "umap", label = FALSE, repel 
                           )    +  
   scale_color_manual(values = ccc )
 
-cplot = LabelClusters(cell_type_plot, id = "customclassif", size = 5, repel = T) + ggtitle ( " Predicted Cell type")
+cell_type_plot = LabelClusters(cell_type_plot, id = "customclassif", size = 5, repel = T) + ggtitle ( " Predicted Cell type")
 
+```
+
+
+
+## Visuals {.tabset}
+
+* merged the samples into a single assay and normalized/scaled and removed unwanted variation with the `SCTransform` function. 
+* We corrected for Mitochondria.
+* final integration was completed with harmony. 
+
+
+### Overall After scaling and normalization 
+
+  * sample names are colored to indicate any batch effect even after integration
+
+```{r fig=TRUE,fig.width=10, fig.height=8, echo=FALSE, include=TRUE, results='asis' }
+batch_plot
+```
+
+### Cell type
+
+  * we used an automated cell-type indentifier ScType to label and group each clusters. 
+  * Ianevski et al, 2022
+  * https://www.nature.com/articles/s41467-022-28803-w
+  * for cell type defintion we merged annotation markers from the zhou et al paper + CellMarker Zhang et al
+    + Zhang et al we selected bone as the sample source.  
+    + after merging the zhou and zhang annotations any other cell type that were missing, eg Endothelial cell we extract from the CellMarker by selecting the most recurrent gene for a specific cell type, irresptive of sample source. 
+
+
+```{r fig=TRUE,fig.width=10, fig.height=8, echo=FALSE, include=TRUE, results='asis' }
+cell_type_plot + ggtitle ( "cell type")
 ```
 
 
